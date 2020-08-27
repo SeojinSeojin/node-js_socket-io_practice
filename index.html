@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <title>Socket IO</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="build/tailwind.css" />
+</head>
+
+<body class="font-serif text-lg">
+    <div id="enterUsername">
+        <div id="username_container" class="bg-red-200 w-100vw h-full flex flex-col justify-center items-center">
+            <input class="border-solid rounded-lg h-8 w-1/3 text-center shadow-xs focus:border focus:shadow-md" type="text" id="username" placeholder="Enter Username" />
+            <a href="#" id="enterChat" class="mt-2 rounded-lg w-1/3 h-8 bg-red-300 text-center text-red-800 shadow-xs hover:shadow-md">Enter Chat</a
+        >
+      </div>
+    </div>
+
+    <div id="chatMain">
+      <h1>Chat</h1>
+      <div id="mainInner">
+        <div id="chatWindows">
+          <div id="publicChat"></div>
+        </div>
+        <div id="userList">
+          <ul></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="rooms">
+      <div id="mainroom"></div>
+    </div>
+
+    <div>
+      <br />
+      <br />
+      <div>
+        <textarea
+          name=""
+          id="chatText"
+          cols="30"
+          rows="10"
+          placeholder="Enter Chat Message"
+        ></textarea>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="client.js"></script>
+    <script>
+      $(function () {
+        $("input#username").focus();
+      });
+    </script>
+  </body>
+</html>
