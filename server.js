@@ -21,6 +21,29 @@ MongoClient.connect(MongoURL, { useUnifiedTopology: true }, function(err, db) {
         // client가 준 username 받기
         socket.on("username", function(username) {
             console.log(username);
+
+            // mongodb에 있는 유저들을 user이벤트로 보내줌
+            users.find().toArray(function(err, res) {
+                if (err) throw err;
+                socket.emit("users", res);
+            });
+
+            // mongodb에 저장
+            users.insertOne({ socketID: socket.id, username: username });
+
+            // broadcast -> 전송한 사람을 제외한 모두가 이 emit을 전달받는다.
+            socket.broadcast.emit("logon", {
+                socketID: socket.id,
+                username: username,
+            });
+
+            // disconnect 처리
+            socket.on("disconnect", function() {
+                console.log(`User ${socket.id} disconnected`);
+                users.deleteOne({ socketID: socket.id }, function() {
+                    socket.broadcast.emit("logoff", socket.id);
+                });
+            });
         });
     });
 });
