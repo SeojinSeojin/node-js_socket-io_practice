@@ -2,10 +2,12 @@ $(function() {
     // socket.io connection
     let socket = io.connect("http://127.0.0.1:3500");
 
+    const enterChat_anchor = document.querySelector("a#enterChat");
     // Enter chat and load users
-    $("a#enterChat").click(function(e) {
+    enterChat_anchor.addEventListener("click", function(e) {
         e.preventDefault();
-        let username = $("#username").val();
+        const username_input = document.querySelector("#username");
+        let username = username_input.value;
         localStorage.setItem("username", username);
         if (username !== "") {
             // 데이터 처리
