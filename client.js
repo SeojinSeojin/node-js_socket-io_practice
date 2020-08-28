@@ -68,7 +68,6 @@ const init = function() {
                     windowID: windowID,
                 });
                 chatTextArea.value = "";
-                chatTextArea.focus();
                 e.preventDefault;
             }
         }
@@ -82,6 +81,7 @@ const init = function() {
             `${data.username} said : ${data.message}`
         );
         p.appendChild(pText);
+        p.className = "border-b-2";
         chatWindows.appendChild(p);
     });
 };
