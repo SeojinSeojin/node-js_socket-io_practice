@@ -44,6 +44,13 @@ MongoClient.connect(MongoURL, { useUnifiedTopology: true }, function(err, db) {
                     socket.broadcast.emit("logoff", socket.id);
                 });
             });
+
+            // message input 처리
+            socket.on("input", function(data) {
+                // db에 저장
+                messages.insertOne({ username: data.username, message: data.message });
+                io.emit("output", data);
+            });
         });
     });
 });

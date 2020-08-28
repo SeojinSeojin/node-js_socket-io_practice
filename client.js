@@ -54,6 +54,36 @@ const init = function() {
         document.getElementById(id).remove();
         localStorage.removeItem("username");
     });
+
+    const chatTextArea = document.querySelector("#chatText");
+    // chat input 처리
+    chatTextArea.addEventListener("keydown", function(e) {
+        if (e.keyCode === 13) {
+            const message = chatTextArea.value;
+            const windowID = document.querySelector("div#publicChat").id;
+            if (message !== "") {
+                socket.emit("input", {
+                    username: localStorage.getItem("username"),
+                    message: message,
+                    windowID: windowID,
+                });
+                chatTextArea.value = "";
+                chatTextArea.focus();
+                e.preventDefault;
+            }
+        }
+    });
+
+    //chat output 처리
+    socket.on("output", function(data) {
+        const chatWindows = document.querySelector(`#${data.windowID}`);
+        const p = document.createElement("p");
+        const pText = document.createTextNode(
+            `${data.username} said : ${data.message}`
+        );
+        p.appendChild(pText);
+        chatWindows.appendChild(p);
+    });
 };
 
 init();
